@@ -1,0 +1,27 @@
+{
+  "name": "zoomoscjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "tsc -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ByteHive/ZoomOSCJS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ByteHive/ZoomOSCJS/issues"
+  },
+  "homepage": "https://github.com/ByteHive/ZoomOSCJS#readme",
+  "devDependencies": {
+    "@types/node": "^18.0.3",
+    "@types/node-osc": "^6.0.0",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "node-osc": "^8.0.3"
+  }
+}

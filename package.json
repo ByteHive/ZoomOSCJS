@@ -22,6 +22,7 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "node-osc": "^8.0.3"
   }
 }

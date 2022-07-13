@@ -1,4 +1,5 @@
 import {EventEmitter }from "events";
+import { Zosc } from "./Zosc";
 
 export class User extends EventEmitter {
     targetIndex: number = -1;
@@ -13,12 +14,21 @@ export class User extends EventEmitter {
     audioStatus:boolean = false;
     handRaised:boolean = false;
     isSpeaking:boolean = false;
-    constructor(userName:string) {
+    zosc:Zosc;
+    constructor(zosc:Zosc,zoomID:number,userName:string) {
         super();
+        this.zoomID = zoomID;
+        this.userName = userName;
+        this.zosc = zosc;
     }
     handleUpdate(type:string,data:any){
         console.log("got action type :",type)
-        //todo check if any of the typical User Params changed like target id or gallery index
+        this.targetIndex = data[1];
+        this.userName = data[2];
+        this.galleryIndex = data[3];
+        if(this.zoomID!=data[4]){
+            console.log("zoomID changed from",this.zoomID,"to",data[3],"create a new user");
+        }
         //todo should we always return this ? 
         switch (type) {
             case "chat":
@@ -69,8 +79,18 @@ export class User extends EventEmitter {
                 break;
             case "askedQuestion":
                 //todo should we store which questions where asked ?
-                this.emit("askedQuestion");
+                this.emit("askedQuestion",data[5]);
                 break;
+            case "list":
+                this.targetCount = data[5];
+                this.listCount = data[6];
+                this.userRole = data[7];
+                this.userStatus = data[8];
+                this.videoStatus = data[9];
+                this.audioStatus = data[10];
+                this.handRaised = data[11];
+                this.emit("update",this);
+                break
             default:
                 console.log("got unknown action type :",type);
                 
@@ -78,69 +98,128 @@ export class User extends EventEmitter {
         }
     }
     videoOn(){
-
+        this.sendCommand("videoOn");
     }
     videoOff(){
+        this.sendCommand("videoOff");
     }
-    //this function is no deterministic.. propaply should not ofer it to endusers
+    //this function is non-deterministic.. probably should not offer it to end users
     toggleVideo(){
-
+        this.sendCommand("toggleVideo");
     }
     mute(){
-
+        this.sendCommand("mute");
     }
     unMute(){
-
+        this.sendCommand("unMute");
     }
-    //this function is no deterministic.. propaply should not ofer it to endusers
+    //this function is non-deterministic.. probably should not offer it to end users
     toggleMute(){
-        
+        this.sendCommand("toggleMute");
     }
     //Spotlight Commands
     spot(){
-
+        this.sendCommand("spot");
     }
     addSpot(){
-
+        this.sendCommand("addSpot");
     }
     unSpot(){
+        this.sendCommand("unSpot");
     }
-    //this function is no deterministic.. propaply should not ofer it to endusers
-    toggleSpot(){ }
+    //this function is non-deterministic.. probably should not offer it to end users
+    toggleSpot(){
+        this.sendCommand("toggleSpot");
+    }
 
 
     //Hand Commands
-    raiseHand(){}
-    lowerHand(){}
-    //this function is no deterministic.. propaply should not ofer it to endusers
-    toggleHand(){}
+    raiseHand(){
+        this.sendCommand("raiseHand");
+    }
+    lowerHand(){
+        this.sendCommand("lowerHand");
+    }
+    //this function is non-deterministic.. probably should not offer it to end users
+    toggleHand(){
+        this.sendCommand("toggleHand");
+    }
 
     //Pin commands 
-    pin(){}
-    addPin(){}
-    unPin(){}
-    pin2(){}
-    unPin2(){}
-    //this function is no deterministic.. propaply should not ofer it to endusers
-    togglePin(){}
-    //this function is no deterministic.. propaply should not ofer it to endusers
-    togglePin2(){}
-    clearPin(){}
-    makeHost(){}
-    makeCoHost(){}
-    reclaimHost(){}
-    revokeCoHost(){}
-    makePanelist(){}
-    makeAttendee(){}
-    eject(){}
-    rename(){}
-    allowToRecord(){}
-    disallowToRecord(){}
-    chat(message:string){}
-    allowToSpeak(){}
-    disallowToSpeak(){}
-    sendToWaitingRoom(){}
-    admit(){}
+    pin(){
+        this.sendCommand("pin");
+    }
+    addPin(){
+        this.sendCommand("addPin");
+    }
+    unPin(){
+        this.sendCommand("unPin");
+    }
+    pin2(){
+        this.sendCommand("pin2");
+    }
+    unPin2(){
+        this.sendCommand("unPin2");
+    }
+    //this function is non-deterministic.. probably should not offer it to end users
+    togglePin(){
+        this.sendCommand("togglePin");
+    }
+    //this function is non-deterministic.. probably should not offer it to end users
+    togglePin2(){
+        this.sendCommand("togglePin2");
+    }
+    clearPin(){
+        this.sendCommand("clearPin");
+    }
+    makeHost(){
+        this.sendCommand("makeHost");
+    }
+    makeCoHost(){
+        this.sendCommand("makeCoHost");
+    }
+    reclaimHost(){
+        this.sendCommand("reclaimHost");
+    }
+    revokeCoHost(){
+        this.sendCommand("revokeCoHost");
+    }
+    makePanelist(){
+        this.sendCommand("makePanelist");
+    }
+    makeAttendee(){
+        this.sendCommand("makeAttendee");
+    }
+    eject(){
+        this.sendCommand("eject");
+    }
+    rename(newname:string){
+        this.sendCommand("rename",newname);
+    }
+    allowToRecord(){
+        this.sendCommand("allowToRecord");
+    }
+    disallowToRecord(){
+        this.sendCommand("disallowToRecord");
+    }
+    chat(message:string){
+        this.sendCommand("chat",message);
+    }
+    allowToSpeak(){
+        this.sendCommand("allowToSpeak");
+    }
+    disallowToSpeak(){
+        this.sendCommand("disallowToSpeak");
+    }
+    sendToWaitingRoom(){
+        this.sendCommand("sendToWaitingRoom");
+    }
+    admit(){
+        this.sendCommand("admit");
+    }
+    sendCommand(command,data?){
+        this.zosc.sendCommand(command,this,data);
+    }
 }
 
 

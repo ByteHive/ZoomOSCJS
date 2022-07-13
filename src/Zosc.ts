@@ -28,27 +28,122 @@ export class Zosc extends EventEmitter {
     joinMeetingwithID(meetingID:string){
 
     }
+
     handleUpdate(message: [string, ...ArgumentType[]]){
-        //console.log("message is:",message);
+        
         let spliturl = message[0].split("/");
         let prefix = spliturl[1]; 
+        //console.log("message is:",message,"split is:",spliturl);
         //handle user Actions
         if(spliturl[2] == 'user'||spliturl[2] == 'me'){
             let zoomID = parseInt(<string>message[4]);
             let action = spliturl[3];
             //check if we know user if not create him 
             if(this.users[zoomID] == undefined){
-                this.users[zoomID] = new User(<string>message[2]);	// create a new instance of the User class
+                this.users[zoomID] = new User(this,zoomID,<string>message[2]);	// create a new instance of the User class
                 if(spliturl[2] == 'me'){
                     this.self = this.users[zoomID];
                 }
+                this.emit("newUser",this.users[zoomID]);
             }
             if(UserCommands.includes(action)){
                 this.users[zoomID].handleUpdate(action,message);	
             }
         }
     }
-    sendCommand(){
+    sendCommand(command,user,data?){
+        let oscURL = "/zoom/zoomID/"+command 
+        console.log("sending command:",oscURL,user.zoomID);
+        if(data != undefined){
+        this.oscClient.send(oscURL,user.zoomID,data);
+        }else{
+            this.oscClient.send(oscURL,user.zoomID);
+        }
+    
+    }
+    sendMeCommand(command,data?){
+        let oscURL = "/zoom/me/"+command 
+        console.log("sending command:",oscURL,data);
+        if(data != undefined){
+        this.oscClient.send(oscURL,data);
+        }else{
+            this.oscClient.send(oscURL);
+        }
+    }
+    sendZoomCommand(command,data?){
+        let oscURL = "/zoom/"+command
+        console.log("sending command:",oscURL);
+        if(data != undefined){
+        this.oscClient.send(oscURL,data);
+        }else{
+            this.oscClient.send(oscURL);
+        }
 
+    }
+    // Recording Commands
+    startLocalRecord(){
+        this.sendZoomCommand("startLocalRecording");
+    }
+    pauseLocalRecord(){
+        this.sendZoomCommand("pauseLocalRecording");
+    }
+    resumeLocalRecord(){
+        this.sendZoomCommand("resumeLocalRecording");
+    }
+    stopLocalRecord(){
+        this.sendZoomCommand("stopLocalRecording");
+    }
+    startCloudRecord(){
+        this.sendZoomCommand("startCloudRecording");
+    }
+    pauseCloudRecord(){
+        this.sendZoomCommand("pauseCloudRecording");
+    }
+    resumeCloudRecord(){
+        this.sendZoomCommand("resumeCloudRecording");
+    }
+    stopCloudRecord(){
+        this.sendZoomCommand("stopCloudRecording");
+    }
+    //Global Commands
+    enableUsersUnmute(){
+        this.sendZoomCommand("enableUsersUnmute");
+    }
+    disableUsersUnmute(){
+        this.sendZoomCommand("disableUsersUnmute");
+    }
+    muteAll(){
+        this.sendZoomCommand("all/mute");
+    }
+    unmuteAll(){
+        this.sendZoomCommand("all/unmute");
+    }
+    lowerAllHands(){
+        this.sendZoomCommand("lowerAllHands");
+    }
+    clearSpotlight(){
+        this.sendZoomCommand("clearSpot");
+    }
+    ping(){
+        this.sendZoomCommand("ping");
+    }
+    leaveMeeting(){
+        this.sendZoomCommand("leaveMeeting");
+    }
+    endMeeting(){
+        this.sendZoomCommand("endMeeting");
+    }
+    ejectAttendees(){
+        this.sendZoomCommand("ejectAttendees");
+    }
+    getWebinarReactionCounts(){
+        this.sendZoomCommand("getWebinarReactionCounts");
+    }
+    resetWebinarReactionCounts(){
+        this.sendZoomCommand("resetWebinarReactionCounts");
+    }
+    //View Commands
+    chatAll(message){
+        this.sendZoomCommand("chatAll",message);
     }
 }

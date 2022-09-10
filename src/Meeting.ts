@@ -4,4 +4,5 @@ export class Meeting extends EventEmitter {
     constructor(userName:string) {
         super();
     }
+    
 }

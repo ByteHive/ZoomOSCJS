@@ -144,7 +144,19 @@ export class User extends EventEmitter {
     toggleHand(){
         this.sendCommand("toggleHand");
     }
-
+    //Breakouroom Commands#
+    sendToBreakout(breakoutRoom:String|number){
+        this.sendCommand("sendToBreakout",breakoutRoom);
+    }
+    assignToBreakout(breakoutRoom:String|number){
+        this.sendCommand("assignToBreakout",breakoutRoom);
+    }
+    unassignFromBreakout(breakoutRoom:String|number){
+        this.sendCommand("unassignFromBreakout",breakoutRoom);
+    }
+    removeFrombreakout(breakoutRoom:String|number){
+        this.sendCommand("removeFrombreakout",breakoutRoom);
+    }
     //Pin commands 
     pin(){
         this.sendCommand("pin");

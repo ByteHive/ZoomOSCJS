@@ -7,6 +7,7 @@ export class Zosc extends EventEmitter {
     transmissionIp:string = "127.0.0.1";
     transmissionPort:number = 9090;
     receivingport:number = 8081;
+    //To be Implmented 
     currentMeeting:Meeting;
     oscServer:Server;
     oscClient:Client;
@@ -26,14 +27,13 @@ export class Zosc extends EventEmitter {
         
     }
     joinMeetingwithID(meetingID:string){
-
+        	
     }
 
     handleUpdate(message: [string, ...ArgumentType[]]){
         
         let spliturl = message[0].split("/");
         let prefix = spliturl[1]; 
-        //console.log("message is:",message,"split is:",spliturl);
         //handle user Actions
         if(spliturl[2] == 'user'||spliturl[2] == 'me'){
             let zoomID = parseInt(<string>message[4]);
@@ -145,5 +145,24 @@ export class Zosc extends EventEmitter {
     //View Commands
     chatAll(message){
         this.sendZoomCommand("chatAll",message);
+    }
+    createBreakout(name:String|number){
+        this.sendZoomCommand("createBreakout",name);
+    }
+    deleteBreakout(name:String|number){
+        this.sendZoomCommand("deleteBreakout",name);
+    }
+    deleteAllBreakouts(){
+        this.sendZoomCommand("deleteAllBreakouts");
+    }
+    openBreakouts(){
+        this.sendZoomCommand("openBreakouts");
+    }
+    closeBreakouts(){
+        this.sendZoomCommand("closeBreakouts");
+    }
+    //Todo configure Breakouts
+    broadcastToBreakout(message){
+        this.sendZoomCommand("broadcastToBreakout",message);
     }
 }

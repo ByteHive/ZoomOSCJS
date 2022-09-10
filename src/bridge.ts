@@ -5,7 +5,6 @@ let MeetingZosc = new Zosc("127.0.0.1",9090,8081);
 
 WebinarZosc.on("newUser",(user)=>{
    user.on('askedQuestion',(question)=>{
-    MeetingZosc.sendMeCommand("rename",user.userName);
-    MeetingZosc.chatAll(question.toString())
+    MeetingZosc.chatAll(""+user.userName+" asked:"+question.toString())
    })
    })

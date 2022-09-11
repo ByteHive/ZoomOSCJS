@@ -3,7 +3,7 @@ import { Meeting } from "./meeting";
 import {Server,Client, ArgumentType} from 'node-osc';
 import { User } from "./User";
 import { UserCommands } from "./consts";
-export class Zosc extends EventEmitter {
+export default class Zosc extends EventEmitter {
     transmissionIp:string = "127.0.0.1";
     transmissionPort:number = 9090;
     receivingport:number = 8081;
@@ -24,7 +24,8 @@ export class Zosc extends EventEmitter {
         this.oscServer.on("message",(message: [string, ...ArgumentType[]])=>{
             this.handleUpdate(message);
         })
-        
+        this.emit('ready',"test");
+        console.log("loaded from zosc")
     }
     joinMeetingwithID(meetingID:string){
         	

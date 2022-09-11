@@ -1,5 +1,5 @@
 import {EventEmitter }from "events";
-import { Zosc } from "./Zosc";
+import Zosc  from "./Zosc";
 
 export class User extends EventEmitter {
     targetIndex: number = -1;

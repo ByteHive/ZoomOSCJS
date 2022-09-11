@@ -2,7 +2,7 @@
   "name": "@bytehive/zoomoscjs",
   "version": "0.0.1",
   "description": "Lib to controll Zoom trough ZoomOSC",
-  "main": "dist/index.js",
+  "main": "dist/zosc.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "watch": "tsc -w",

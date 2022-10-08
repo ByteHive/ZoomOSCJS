@@ -42,7 +42,10 @@ sendToWaitingRoom(),admit()
 "emojiChanged","isSpeaking"
 "stoppedSpeaking","activeSpeaker"
 "askedQuestion","update"
+## Example
+```
 
+```
 ## TODO's
 - [ ] add join Zoom Meeting commands
 - [ ] add more Exampels

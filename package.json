@@ -1,11 +1,12 @@
 {
   "name": "@bytehive/zoomoscjs",
   "version": "0.0.1",
-  "description": "Lib to controll Zoom trough ZoomOSC",
+  "description": "Libary to controll Zoom trough ZoomOSC",
   "main": "dist/zosc.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "watch": "tsc -w",
+    "example": "node ./dist/exampel.js",
     "prepublish": "tsc"
 
   },
@@ -25,10 +26,9 @@
     "typescript": "^4.7.4"
   },
   "dependencies": {
-    "axios": "^0.27.2",
     "node-osc": "^8.0.3"
   },
   "keywords": [
-    "Zoom"
+    "Zoom","Broadcast","OSC","ZoomOSC","ZoomISO"
   ]
 }

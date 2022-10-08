@@ -24,12 +24,8 @@ export default class Zosc extends EventEmitter {
         this.oscServer.on("message",(message: [string, ...ArgumentType[]])=>{
             this.handleUpdate(message);
         })
-        this.emit('ready',"test");
-        console.log("loaded from zosc")
     }
-    joinMeetingwithID(meetingID:string){
-        	
-    }
+    
 
     handleUpdate(message: [string, ...ArgumentType[]]){
         
@@ -80,6 +76,9 @@ export default class Zosc extends EventEmitter {
             this.oscClient.send(oscURL);
         }
 
+    }
+    joinMeetingwithID(meetingID:string){
+        	
     }
     // Recording Commands
     startLocalRecord(){

@@ -1,4 +1,5 @@
 import {EventEmitter }from "events";
+import Ziso from "./Ziso";
 import Zosc  from "./Zosc";
 
 export class User extends EventEmitter {
@@ -14,7 +15,7 @@ export class User extends EventEmitter {
     audioStatus:boolean = false;
     handRaised:boolean = false;
     isSpeaking:boolean = false;
-    zosc:Zosc;
+    zosc:Zosc|Ziso;
     constructor(zosc:Zosc,zoomID:number,userName:string) {
         super();
         this.zoomID = zoomID;

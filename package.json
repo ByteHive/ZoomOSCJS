@@ -1,6 +1,6 @@
 {
   "name": "@bytehive/zoomoscjs",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Libary to controll Zoom trough ZoomOSC",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

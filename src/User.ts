@@ -23,11 +23,11 @@ export class User extends EventEmitter {
         this.zosc = zosc;
     }
     handleUpdate(type:string,data:any){
-        console.log("got action type :",type)
         this.targetIndex = data[1];
         this.userName = data[2];
         this.galleryIndex = data[3];
         if(this.zoomID!=data[4]){
+            //TODO: when does this happen ? 
             console.log("zoomID changed from",this.zoomID,"to",data[3],"create a new user");
         }
         //todo should we always return this ? 

@@ -48,8 +48,7 @@ const {Zosc} = require('@bytehive/zoomoscjs');
 let zoscCon = new Zosc("192.168.178.110",9090,1234);
     zoscCon.on("newUser",(user)=>{
       user.on("chat",(msg)=>{
-        console.log("new chat message",msg,user)
-        MSGS.push({"chatmessage":msg,"username":user.userName});
+        console.log(user.userName," -> wrote :",msg);
       })  
      })
 

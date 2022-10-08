@@ -50,7 +50,6 @@ export default class Zosc extends EventEmitter {
     }
     sendCommand(command,user,data?){
         let oscURL = "/zoom/zoomID/"+command 
-        console.log("sending command:",oscURL,user.zoomID);
         if(data != undefined){
         this.oscClient.send(oscURL,user.zoomID,data);
         }else{
@@ -60,7 +59,6 @@ export default class Zosc extends EventEmitter {
     }
     sendMeCommand(command,data?){
         let oscURL = "/zoom/me/"+command 
-        console.log("sending command:",oscURL,data);
         if(data != undefined){
         this.oscClient.send(oscURL,data);
         }else{
@@ -69,7 +67,6 @@ export default class Zosc extends EventEmitter {
     }
     sendZoomCommand(command,data?){
         let oscURL = "/zoom/"+command
-        console.log("sending command:",oscURL);
         if(data != undefined){
         this.oscClient.send(oscURL,data);
         }else{
